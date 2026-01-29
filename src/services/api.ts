@@ -1,6 +1,8 @@
 import { locationSourceType } from "../types";
 
-const API_BASE = 'https://rokak-development-task-backend.onrender.com';
+const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
+const CORS_PROXY = 'https://corsproxy.io/?';
+const API_BASE = CORS_PROXY + encodeURIComponent(BACKEND_URL);
 const API_KEY = '6YjnvjAkNS';
 
 export function createSSEConnection(
