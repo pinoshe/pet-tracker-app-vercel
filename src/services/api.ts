@@ -4,11 +4,9 @@ const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 const API_KEY = '6YjnvjAkNS';
 
-const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-
 function buildUrl(path: string): string {
     const fullUrl = `${BACKEND_URL}${path}?key=${API_KEY}`;
-    return isLocalhost ? fullUrl : CORS_PROXY + encodeURIComponent(fullUrl);
+    return import.meta.env.DEV ? fullUrl : CORS_PROXY + encodeURIComponent(fullUrl);
 }
 
 export function createSSEConnection(
