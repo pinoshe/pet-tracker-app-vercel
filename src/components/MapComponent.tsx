@@ -88,7 +88,7 @@ function MapComponent() {
       }));
 
       //Follow last point
-      let debaunceTimeOut: NodeJS.Timeout | undefined;
+      let debaunceTimeOut: ReturnType<typeof setTimeout> | undefined;
       map.on('sourcedata', () => {
         const lastFeature = map.getSource('lastpoint') as any;
         const [lat, lng] = lastFeature._data.geometry.coordinates
