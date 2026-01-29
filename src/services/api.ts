@@ -1,12 +1,10 @@
 import { locationSourceType } from "../types";
 
 const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
-const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 const API_KEY = '6YjnvjAkNS';
 
 function buildUrl(path: string): string {
-    const fullUrl = `${BACKEND_URL}${path}?key=${API_KEY}`;
-    return import.meta.env.DEV ? fullUrl : CORS_PROXY + encodeURIComponent(fullUrl);
+    return `${BACKEND_URL}${path}?key=${API_KEY}`;
 }
 
 export function createSSEConnection(
