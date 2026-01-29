@@ -2,15 +2,18 @@ import { locationSourceType } from "../types";
 
 const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
-const API_BASE = CORS_PROXY + encodeURIComponent(BACKEND_URL);
 const API_KEY = '6YjnvjAkNS';
+
+function proxyUrl(path: string): string {
+    return CORS_PROXY + encodeURIComponent(`${BACKEND_URL}${path}?key=${API_KEY}`);
+}
 
 export function createSSEConnection(
     onCoordinate: (data: { id: string; type: locationSourceType; lng: number; lat: number }) => void,
     onError?: (error: Event) => void
 ): EventSource {
     console.debug(`createSSEConnection!!!`)
-    const es = new EventSource(`${API_BASE}/connect-sse?key=${API_KEY}`);
+    const es = new EventSource(proxyUrl('/connect-sse'));
     es.addEventListener('coordinate', (sseEv) => {
         console.debug(`coordinate event data: ${sseEv.data}`)
         onCoordinate(JSON.parse(sseEv.data));
@@ -23,7 +26,7 @@ export async function postManualDetection(lng: string, lat: string): Promise<voi
     console.debug(`postManualDetection: ${lng}, ${lat}`)
 
     const body = JSON.stringify({ lng, lat });
-    const res = await fetch(`${API_BASE}/manual-detection?key=${API_KEY}`, {
+    const res = await fetch(proxyUrl('/manual-detection'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body
