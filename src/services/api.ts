@@ -1,7 +1,7 @@
 import { locationSourceType } from "../types";
 
 const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
-const CORS_PROXY = 'https://corsproxy.io/?';
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 const API_BASE = CORS_PROXY + encodeURIComponent(BACKEND_URL);
 const API_KEY = '6YjnvjAkNS';
 
