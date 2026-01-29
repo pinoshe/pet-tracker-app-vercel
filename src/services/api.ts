@@ -1,10 +1,17 @@
 import { locationSourceType } from "../types";
 
 const BACKEND_URL = 'https://rokak-development-task-backend.onrender.com';
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 const API_KEY = '6YjnvjAkNS';
 
 function buildUrl(path: string): string {
-    return `${BACKEND_URL}${path}?key=${API_KEY}`;
+    const fullUrl = `${BACKEND_URL}${path}?key=${API_KEY}`;
+    if (import.meta.env.DEV) {
+        return fullUrl;
+    }
+    // Add cache-buster to avoid proxy caching issues
+    const cacheBuster = `&_t=${Date.now()}`;
+    return CORS_PROXY + encodeURIComponent(fullUrl + cacheBuster);
 }
 
 export function createSSEConnection(
